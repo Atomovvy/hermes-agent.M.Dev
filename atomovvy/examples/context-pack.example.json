@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "pack_id": "nova.constellation-routing.example",
+  "generated_at": "2026-08-17T15:35:00Z",
+  "agent_id": "nova",
+  "purpose": "Example bounded context for a Constellation routing task.",
+  "token_budget": 6000,
+  "freshness_policy": {
+    "default_mode": "REFRESH_BEFORE_USE",
+    "refresh_current_state_before_action": true,
+    "max_pack_age_seconds": 3600
+  },
+  "items": [
+    {
+      "item_id": "constellation.registry",
+      "kind": "canonical_doc",
+      "summary": "The Constellation registry is the canonical organizational index. The active agent still derives operational authority from current central/local policy, not from the registry entry alone.",
+      "authority": "CANONICAL_INFORMATION",
+      "provenance": {
+        "schema_version": 1,
+        "source_type": "repository_file",
+        "source": "Atomovvy/Atomovvy:Documentation/Constellation/CONSTELLATION_AGENT_REGISTRY.md",
+        "repository": "Atomovvy/Atomovvy",
+        "path_or_issue_or_pr": "Documentation/Constellation/CONSTELLATION_AGENT_REGISTRY.md",
+        "commit_or_revision": "ffb2aaf8b454adac76ede2a064e7b1ffda4a3245",
+        "observed_at": "2026-08-17T15:35:00Z",
+        "status": "CURRENT",
+        "confidence": "HIGH",
+        "canonical_source": true,
+        "content_hash": null,
+        "authority_class": "CANONICAL_INFORMATION",
+        "freshness": {
+          "mode": "REFRESH_BEFORE_USE",
+          "max_age_seconds": 3600
+        }
+      },
+      "relevance": "REQUIRED",
+      "notes": "Refresh the current repository source before any mutable-state decision."
+    },
+    {
+      "item_id": "project-hub.constellation-origin",
+      "kind": "recent_decision",
+      "summary": "Project Hub Issue #59 is the initiative provenance for Atomovvy Constellation and Hermes/Wiki direction. It is not operational authorization for a new repository mutation.",
+      "authority": "APPROVED_DECISION_POINTER",
+      "provenance": {
+        "schema_version": 1,
+        "source_type": "issue",
+        "source": "Atomovvy/Project-hub#59",
+        "repository": "Atomovvy/Project-hub",
+        "path_or_issue_or_pr": "59",
+        "commit_or_revision": null,
+        "observed_at": "2026-08-17T15:35:00Z",
+        "status": "CURRENT",
+        "confidence": "HIGH",
+        "canonical_source": false,
+        "content_hash": null,
+        "authority_class": "APPROVED_DECISION_POINTER",
+        "freshness": {
+          "mode": "REFRESH_BEFORE_USE",
+          "max_age_seconds": 3600
+        }
+      },
+      "relevance": "HIGH",
+      "notes": "Use as decision provenance, then verify implementation state in the target canonical repositories."
+    }
+  ]
+}
