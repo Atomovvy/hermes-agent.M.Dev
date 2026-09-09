@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atomovvy.local/hermes/provenance.schema.json",
+  "title": "Atomovvy Hermes provenance record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_type",
+    "source",
+    "observed_at",
+    "status",
+    "confidence",
+    "canonical_source"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "repository_file",
+        "commit",
+        "pull_request",
+        "issue",
+        "project_hub",
+        "approved_decision",
+        "runtime_evidence",
+        "research_source"
+      ]
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "repository": {
+      "type": ["string", "null"],
+      "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+    },
+    "path_or_issue_or_pr": {
+      "type": ["string", "null"],
+      "maxLength": 2048
+    },
+    "commit_or_revision": {
+      "type": ["string", "null"],
+      "maxLength": 256
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CURRENT",
+        "HISTORICAL",
+        "DRAFT",
+        "SUPERSEDED",
+        "UNVERIFIED"
+      ]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"]
+    },
+    "canonical_source": {
+      "type": "boolean"
+    },
+    "content_hash": {
+      "type": ["string", "null"],
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "authority_class": {
+      "type": "string",
+      "enum": [
+        "CONTEXT_ONLY",
+        "CANONICAL_INFORMATION",
+        "APPROVED_DECISION_POINTER",
+        "RUNTIME_EVIDENCE_POINTER"
+      ],
+      "default": "CONTEXT_ONLY"
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["PINNED_REVISION", "REFRESH_BEFORE_USE", "HISTORICAL_ONLY"]
+        },
+        "max_age_seconds": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

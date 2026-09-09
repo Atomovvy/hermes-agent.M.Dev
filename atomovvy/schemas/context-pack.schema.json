@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atomovvy.local/hermes/context-pack.schema.json",
+  "title": "Atomovvy Hermes Context Pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "pack_id",
+    "generated_at",
+    "agent_id",
+    "purpose",
+    "token_budget",
+    "freshness_policy",
+    "items"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "pack_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "agent_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "token_budget": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000
+    },
+    "freshness_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default_mode", "refresh_current_state_before_action"],
+      "properties": {
+        "default_mode": {
+          "type": "string",
+          "enum": ["PINNED_REVISION", "REFRESH_BEFORE_USE"]
+        },
+        "refresh_current_state_before_action": {
+          "const": true
+        },
+        "max_pack_age_seconds": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/item"
+      }
+    }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "kind",
+        "summary",
+        "authority",
+        "provenance"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "canonical_doc",
+            "recent_decision",
+            "active_work",
+            "related_project",
+            "handoff",
+            "unresolved_question",
+            "research"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16000
+        },
+        "authority": {
+          "type": "string",
+          "enum": [
+            "CONTEXT_ONLY",
+            "CANONICAL_INFORMATION",
+            "APPROVED_DECISION_POINTER",
+            "RUNTIME_EVIDENCE_POINTER"
+          ]
+        },
+        "provenance": {
+          "$ref": "provenance.schema.json"
+        },
+        "relevance": {
+          "type": "string",
+          "enum": ["REQUIRED", "HIGH", "MEDIUM", "LOW"]
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "maxLength": 4000
+        }
+      }
+    }
+  }
+}
